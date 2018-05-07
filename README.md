@@ -4,7 +4,8 @@ The goal is to automatically stand up a private network that spawns predefined c
 
 ## Design
 ### Goals
-- Automatic network creation with docker(?) and vagrant(?)
+- Automatic container/vm creation with docker(?) and vagrant(?)
+- Automatic network creation 
 - Automatic traffic creation
 - Automatic attack
 - Automatic artifact creation
