@@ -41,4 +41,10 @@ def compose_stop():
     args = ['docker-compose', 'stop']
     compose_run(args)
 
+def compose_pause():
+    args = ['docker-compose', 'pause']
+    compose_run(args)
 
+def compose_unpause():
+    args = ['docker-compose', 'unpause']
+    compose_run(args)

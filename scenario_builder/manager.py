@@ -20,7 +20,7 @@ def run_scenario(args=None):
             }
         }
 
-    subnet = '10.0.0.0/8'
+    subnet = '192.168.50.1/24'
     builder.build(build_args, subnet)
 
 run_scenario()
