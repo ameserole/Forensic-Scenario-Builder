@@ -1,10 +1,11 @@
-version: '3'
+version: '3.5'
 
 services:
     attacker:
         build: {{ attacker_dir }}
         networks:
-            scenario_net:
+            external:
+#            scenario_net:
                 ipv4_address: {{ attacker_ip }}
         environment:
             VICTIM_IP: {{ victim_ip }}        
@@ -13,17 +14,21 @@ services:
     bot-{{ bot_ip }}:
         build: {{ bot_dir }}
         networks:
-            scenario_net:
+            external:
+#            scenario_net:
                 ipv4_address: {{ bot_ip }}
         environment:
             VICTIM_IP: {{ victim_ip }}
     {% endfor %}
 
 networks:
-    scenario_net:
-        internal: true
-        driver: bridge
-        ipam:
-            driver: default
-            config:
-            - subnet: {{ subnet }}
+    external:
+        name: scenario_net
+#networks:
+#    scenario_net:
+#        internal: true
+#        driver: bridge
+#        ipam:
+#            driver: default
+#            config:
+#            - subnet: {{ subnet }}

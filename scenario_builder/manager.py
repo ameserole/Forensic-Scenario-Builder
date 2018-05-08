@@ -15,9 +15,9 @@ def run_scenario(args=None):
             'victim': {
                 'dir': '/home/messy/Documents/scenario/victim',
                 'ip': 'random',
-                'manager': 'vagrant'
+                'manager': 'vagrant',
+                'pcap': 'false'
             }
-#            'pcap': False,
         }
 
     subnet = '10.0.0.0/8'

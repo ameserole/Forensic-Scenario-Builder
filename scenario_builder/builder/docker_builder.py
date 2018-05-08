@@ -23,5 +23,7 @@ def gen_compose_file(docker_info):
 def docker_build(docker_info):
     gen_compose_file(docker_info)
     compose_cmd.compose_build()
+#    compose_cmd.compose_up(detach=True)
+#    compose_cmd.compose_stop()
     return True
 
