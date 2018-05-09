@@ -45,20 +45,19 @@ def build(scenario_info, subnet):
     Build all containers and VMs based off of given info
     """
     
-
     docker_info = {}
     vagrant_info = {}
 
     ip_list = generate_ips(subnet, scenario_info['bot']['num-ips'] + 2)
 
     attacker_info = scenario_info['attacker']
-    if scenario_info['attacker']['ip'] == 'random':
+    if 'random' in scenario_info['attacker']['ip']:
         attacker_info['ip'] = ip_list[0]
     else:
         attacker_info['ip'] = scenario_info['attacker']['ip']
 
     victim_info = scenario_info['victim']
-    if scenario_info['victim']['ip'] == 'random':
+    if 'random' in scenario_info['victim']['ip']:
         victim_info['ip'] = ip_list[1]
     else:
         victim_info['ip'] = scenario_info['victim']['ip']
@@ -83,6 +82,17 @@ def build(scenario_info, subnet):
     time.sleep(10)
     vagrant_build(vagrant_info)
     time.sleep(10)
-#    compose_cmd.compose_unpause()
+    
+    return_info = {}
+    return_info['attacker'] = attacker_info
+    return_info['victim'] = victim_info
+    return_info['docker'] = docker_info
+    return_info['vagrant'] = vagrant_info
+    return_info['bridge'] = vagrant_info['bridge']
+
+    return return_info
+
+def run(scenario_info):
+    compose_cmd.compose_unpause()
 
 
