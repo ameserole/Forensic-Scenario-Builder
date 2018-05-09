@@ -25,9 +25,6 @@ def generate_ips(subnet, number):
 def docker_net_create(subnet, victim_ip):
     ipam_pool = docker.types.IPAMPool(
         subnet=subnet,
-        aux_addresses={
-                'victim': victim_ip
-            }
     )
 
     ipam_config = docker.types.IPAMConfig(
@@ -55,10 +52,16 @@ def build(scenario_info, subnet):
     ip_list = generate_ips(subnet, scenario_info['bot']['num-ips'] + 2)
 
     attacker_info = scenario_info['attacker']
-    attacker_info['ip'] = ip_list[0]
+    if scenario_info['attacker']['ip'] == 'random':
+        attacker_info['ip'] = ip_list[0]
+    else:
+        attacker_info['ip'] = scenario_info['attacker']['ip']
 
     victim_info = scenario_info['victim']
-    victim_info['ip'] = ip_list[1]
+    if scenario_info['victim']['ip'] == 'random':
+        victim_info['ip'] = ip_list[1]
+    else:
+        victim_info['ip'] = scenario_info['victim']['ip']
 
     bot_info = scenario_info['bot']
     bot_info['ip_list'] = ip_list[2:]
@@ -81,7 +84,5 @@ def build(scenario_info, subnet):
     vagrant_build(vagrant_info)
     time.sleep(10)
 #    compose_cmd.compose_unpause()
-#    net_id = client.networks.list(names="scenario_net")[0].id
-#    vagrant_info['bridge'] = "br-{}".format(net_id[:12])
 
 

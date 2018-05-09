@@ -24,11 +24,11 @@ arg_dict['bot'] = {'dir': args.bot[0],
                    'manager': 'docker'}
 
 arg_dict['attacker'] = {'dir': args.attacker[0],
-                        'ip': args.attacker_ip,
+                        'ip': args.attacker_ip[0],
                         'manager': 'docker'}
 
 arg_dict['victim'] = {'dir': args.victim[0],
-                      'ip': args.victim_ip,
+                      'ip': args.victim_ip[0],
                       'manager': 'vagrant'}
 
 arg_dict['subnet'] = args.subnet
