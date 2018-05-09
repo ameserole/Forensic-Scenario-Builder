@@ -1,6 +1,8 @@
 import docker
 import time
 import compose_cmd
+import random
+from ipaddress import IPv4Network
 from docker_builder import docker_build 
 from vagrant_builder import vagrant_build
 
@@ -10,8 +12,15 @@ def generate_ips(subnet, number):
     """
     Generate number of random ips in given subnet
     """
+    network = IPv4Network(unicode(subnet), strict=False)
 
-    return ['192.168.50.11', '192.168.50.3', '192.168.50.4', '192.168.50.5']
+    ip_list = []
+    for i in range(number):
+        ip = str(network[random.randint(0,len(list(network)))])
+        if ip not in ip_list:
+            ip_list.append(ip)
+
+    return ip_list
 
 def docker_net_create(subnet, victim_ip):
     ipam_pool = docker.types.IPAMPool(
@@ -62,6 +71,7 @@ def build(scenario_info, subnet):
 
     docker_net = docker_net_create(subnet, victim_info['ip'])
     vagrant_info['bridge'] = "dm-{}".format(docker_net.id[:12])
+    vagrant_info['cidr'] = subnet.split('/')[1]
 
     docker_info['victim_ip'] = victim_info['ip']
     docker_info['subnet'] = subnet

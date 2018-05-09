@@ -25,6 +25,6 @@ def run_scenario(args):
     build_args['bot'] = args['bot']
     build_args['attacker'] = args['attacker']
     build_args['victim'] = args['victim']
-    subnet = '192.168.50.1/24'
+    subnet = args['subnet']
     builder.build(build_args, subnet)
 

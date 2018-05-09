@@ -31,6 +31,6 @@ arg_dict['victim'] = {'dir': args.victim[0],
                       'ip': args.victim_ip,
                       'manager': 'vagrant'}
 
-arg_dict['subnet'] = '192.168.50.1/24'#args.subnet
+arg_dict['subnet'] = args.subnet
 
 manager.run_scenario(arg_dict)
