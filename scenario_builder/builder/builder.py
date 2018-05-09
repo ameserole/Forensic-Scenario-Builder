@@ -28,7 +28,8 @@ def docker_net_create(subnet, victim_ip):
     docker_net = client.networks.create(
         name="scenario_net",
         driver="macvlan",
-        ipam=ipam_config
+        ipam=ipam_config,
+        check_duplicate=True,
     )
 
     return docker_net

@@ -1,8 +1,7 @@
 import argparse
+from scenario_builder import manager
 
-def dispatcher(args):
-    print args
-    
+  
 parser = argparse.ArgumentParser(description='Forensic Scenario Builder CLI')
 parser.add_argument('--bot', required=True, nargs=1, help='Location of file describing bot container or vm.')
 parser.add_argument('--bot-num', nargs=1, type=int, default=1, help='Number of bot containers to spawn. Defaults to one.')
@@ -18,4 +17,20 @@ parser.add_argument('--subnet', default='10.0.0.0/8', help='Subnet to place scen
 
 
 args = parser.parse_args()
-dispatcher(args)
+print args
+arg_dict = {}
+arg_dict['bot'] = {'dir': args.bot[0],
+                   'num-ips': args.bot_num[0],
+                   'manager': 'docker'}
+
+arg_dict['attacker'] = {'dir': args.attacker[0],
+                        'ip': args.attacker_ip,
+                        'manager': 'docker'}
+
+arg_dict['victim'] = {'dir': args.victim[0],
+                      'ip': args.victim_ip,
+                      'manager': 'vagrant'}
+
+arg_dict['subnet'] = '192.168.50.1/24'#args.subnet
+
+manager.run_scenario(arg_dict)

@@ -1,9 +1,10 @@
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 import compose_cmd
+import time
 
 def gen_compose_file(docker_info):
     env = Environment(
-        loader=FileSystemLoader('./builder/templates'),
+        loader=FileSystemLoader('./scenario_builder/builder/templates'),
         autoescape=select_autoescape(['yml'])
     )
 
@@ -24,6 +25,7 @@ def docker_build(docker_info):
     gen_compose_file(docker_info)
     compose_cmd.compose_build()
     compose_cmd.compose_up(detach=True)
+    time.sleep(10)
     compose_cmd.compose_pause()
     return True
 

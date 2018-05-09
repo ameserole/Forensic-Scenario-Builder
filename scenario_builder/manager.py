@@ -1,6 +1,7 @@
 from builder import builder
 
-def run_scenario(args=None):
+def run_scenario(args):
+    """
     build_args = {
             'bot': {
                 'dir': '/home/messy/Documents/scenario/bot',
@@ -19,8 +20,11 @@ def run_scenario(args=None):
                 'pcap': 'false'
             }
         }
-
+    """
+    build_args = {}
+    build_args['bot'] = args['bot']
+    build_args['attacker'] = args['attacker']
+    build_args['victim'] = args['victim']
     subnet = '192.168.50.1/24'
     builder.build(build_args, subnet)
 
-run_scenario()
