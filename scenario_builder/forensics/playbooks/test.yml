@@ -1,0 +1,11 @@
+---
+- hosts: victim
+  remote_user: vagrant
+
+  tasks:
+  - name: test
+    command: whoami
+    register: hello
+
+  - debug: msg="{{ hello.stdout }}"
+

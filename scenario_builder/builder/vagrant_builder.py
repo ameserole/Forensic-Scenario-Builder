@@ -30,7 +30,7 @@ def gen_vagrantfile(vagrant_info):
 def vagrant_build(vagrant_info):
     vagrant_loc = gen_vagrantfile(vagrant_info)
     v = vagrant.Vagrant(vagrant_info['victim']['dir'], quiet_stdout=False, quiet_stderr=False)
-    v.provision()
+#    v.provision()
     v.up()
 
     return True

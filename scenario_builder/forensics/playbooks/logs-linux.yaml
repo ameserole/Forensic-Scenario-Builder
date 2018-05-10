@@ -1,0 +1,21 @@
+---
+- name: Copy logs
+  hosts: victim
+  remote_user: vagrant
+  become: yes
+  become_user: root
+
+
+  tasks:
+  - name: "Archive logs"
+    archive: 
+      path: /var/log
+      dest: /tmp/logs.zip
+      format: zip
+
+  - name: "Copy"
+    fetch:
+      src: /tmp/logs.zip
+      dest: ./logs.zip
+      flat: yes
+    

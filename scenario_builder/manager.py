@@ -7,8 +7,6 @@ def run_scenario(args):
     build_args['attacker'] = args['attacker']
     build_args['victim'] = args['victim']
     subnet = args['subnet']
-    print args
-    print args['pcap']
 
     scenario_info = builder.build(build_args, subnet)
 
@@ -17,5 +15,4 @@ def run_scenario(args):
 
     print "running scenario"
     builder.run(scenario_info)
-    
    

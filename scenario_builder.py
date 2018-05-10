@@ -3,7 +3,7 @@ from scenario_builder import manager
   
 parser = argparse.ArgumentParser(description='Forensic Scenario Builder CLI')
 parser.add_argument('--bot', required=True, nargs=1, help='Location of file describing bot container or vm.')
-parser.add_argument('--bot-num', nargs=1, type=int, default=1, help='Number of bot containers to spawn. Defaults to one.')
+parser.add_argument('--bot-num', nargs=1, type=int, default=[1], help='Number of bot containers to spawn. Defaults to one.')
 parser.add_argument('--attacker', required=True, nargs=1, help='Location of file describing attacker container or vm.')
 parser.add_argument('--attacker-ip', nargs=1, default=['random'], help='Assign static ip to attacker. Defaults to random assignment.')
 parser.add_argument('--victim', required=True, nargs=1, help='Location of file describing victim container or vm.')
@@ -15,7 +15,6 @@ parser.add_argument('--pcap', help='Create packet capture of scenario traffic')
 parser.add_argument('--subnet', default='10.0.0.0/8', help='Subnet to place scenarios and containers on. Defaults to 10.0.0.0/8')
 
 args = parser.parse_args()
-print args
 arg_dict = {}
 arg_dict['bot'] = {'dir': args.bot[0],
                    'num-ips': args.bot_num[0],
