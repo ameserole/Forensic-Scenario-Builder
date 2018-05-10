@@ -14,9 +14,12 @@ def generate_ips(subnet, number):
     """
     network = IPv4Network(unicode(subnet), strict=False)
 
+    cidr = int(subnet.split('/')[1])
+    num_ips = pow(2, (32-cidr)) - 2 
+
     ip_list = []
     for i in range(number):
-        ip = str(network[random.randint(0,len(list(network)))])
+        ip = str(network[random.randint(0,num_ips)])
         if ip not in ip_list:
             ip_list.append(ip)
 
