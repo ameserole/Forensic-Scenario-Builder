@@ -25,7 +25,7 @@ def generate_ips(subnet, number):
 
     return ip_list
 
-def docker_net_create(subnet, victim_ip):
+def docker_net_create(subnet):
     ipam_pool = docker.types.IPAMPool(
         subnet=subnet,
     )
@@ -74,7 +74,7 @@ def build(scenario_info, subnet):
         else:
             vagrant_info[key] = value
 
-    docker_net = docker_net_create(subnet, victim_info['ip'])
+    docker_net = docker_net_create(subnet)
     vagrant_info['bridge'] = "dm-{}".format(docker_net.id[:12])
     vagrant_info['cidr'] = subnet.split('/')[1]
 
