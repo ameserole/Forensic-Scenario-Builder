@@ -1,4 +1,4 @@
-from builder import builder
+from builder import builder, compose_cmd
 from forensics import forensics
 import time
 
@@ -17,6 +17,10 @@ def run_scenario(args):
     print "running scenario"
     builder.run(scenario_info)
     time.sleep(60*5)   
+    compose_cmd.compose_pause()
+    print "Creating logs"
     forensics.logs(scenario_info)
+    print "Creating Disk Image"
+    forensics.disk_image(args)
     builder.tear_down(scenario_info)
     print "Scenario Done"    
