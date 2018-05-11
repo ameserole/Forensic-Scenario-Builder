@@ -1,5 +1,6 @@
 from builder import builder
 from forensics import forensics
+import time
 
 def run_scenario(args):
     build_args = {}
@@ -15,4 +16,7 @@ def run_scenario(args):
 
     print "running scenario"
     builder.run(scenario_info)
-   
+    time.sleep(60*5)   
+    forensics.logs(scenario_info)
+    builder.tear_down(scenario_info)
+    print "Scenario Done"    

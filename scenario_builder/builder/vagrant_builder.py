@@ -34,3 +34,8 @@ def vagrant_build(vagrant_info):
     v.up()
 
     return True
+
+def vagrant_destroy(vagrant_info):
+    vagrantfile = vagrant_info['victim']['dir']
+    v = vagrant.Vagrant(vagrantfile, quiet_stdout=False, quiet_stderr=False)
+    v.destroy()

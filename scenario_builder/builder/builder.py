@@ -4,7 +4,7 @@ import compose_cmd
 import random
 from ipaddress import IPv4Network
 from docker_builder import docker_build 
-from vagrant_builder import vagrant_build
+from vagrant_builder import vagrant_build, vagrant_destroy
 
 client = docker.from_env()
 
@@ -98,4 +98,7 @@ def build(scenario_info, subnet):
 def run(scenario_info):
     compose_cmd.compose_unpause()
 
+def tear_down(scenario_info):
+    compose_cmd.compose_down()
+    vagrant_destroy(scenario_info)
 
