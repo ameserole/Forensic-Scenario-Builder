@@ -25,7 +25,8 @@ def run_scenario(args):
 
     if args['disk_image'] is not None:
         print "Creating Disk Image"
-        forensics.disk_image(args['disk_image'])
+        forensics.disk_image(args['victim']['dir'])
+        print "Done creating disk image"
 
     print "Tearing everything down"
     builder.tear_down(scenario_info)

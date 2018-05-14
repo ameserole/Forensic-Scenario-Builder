@@ -12,13 +12,13 @@ def logs(logs_loc):
     runner.run_playbook()
     os.rename('./scenario_builder/forensics/playbooks/logs.zip', './logs.zip')
 
-def disk_image(disk_image):
-    tmpfile = '/tmp/filesystem.image.gz'
-    if not os.path.exists(tmpfile):
-        open(tmpfile, 'a').close()
+def disk_image(victim):
+    tmpfile = victim + 'filesystem.image.gz'
+#    if not os.path.exists(tmpfile):
+#        open(tmpfile, 'a').close()
     runner = AnsibleRunner('./scenario_builder/forensics/playbooks/diskimage-linux.yaml', hosts='./scenario_builder/forensics/hosts')
     runner.run_playbook()
-    os.rename('/tmp/filesystem.image.gz', disk_image)
+    os.rename(tmpfile, './filesystem.image.gz')
 
 def memory_dump():
     return True

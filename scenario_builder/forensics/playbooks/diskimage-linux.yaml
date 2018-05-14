@@ -7,15 +7,5 @@
 
   tasks:
   - name: "Run dd"
-    shell: dd if=/dev/sda1 | gzip > /tmp/filesystem.image.gz
+    shell: dd if=/dev/sda1 | gzip > /vagrant/filesystem.image.gz
 
-  - name: "Copy Image to Host"
-    synchronize:
-      mode: pull
-      src: /tmp/filesystem.image.gz
-      dest: /tmp/filesystem.image.gz
-
-  - name: "Delete Temp Disk Image"
-    file:
-      state: absent
-      path: /tmp/filesystem.image.gz
