@@ -14,3 +14,8 @@
       mode: pull
       src: /tmp/filesystem.image.gz
       dest: /tmp/filesystem.image.gz
+
+  - name: "Delete Temp Disk Image"
+    file:
+      state: absent
+      path: /tmp/filesystem.image.gz

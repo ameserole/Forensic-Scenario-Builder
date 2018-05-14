@@ -8,8 +8,8 @@ parser.add_argument('--attacker', required=True, nargs=1, help='Location of file
 parser.add_argument('--attacker-ip', nargs=1, default=['random'], help='Assign static ip to attacker. Defaults to random assignment.')
 parser.add_argument('--victim', required=True, nargs=1, help='Location of file describing victim container or vm.')
 parser.add_argument('--victim-ip', nargs=1, default=['random'], help='Assign static ip to victim. Defaults to random assignment.')
-parser.add_argument('--logs', nargs='*', help='Location(s) to pull log file(s) from on victim after scenario is done.')
-parser.add_argument('--disk-image', nargs=1, default=['./filesystem.image.gz'], help='Create disk image of victim after scenario is done')
+parser.add_argument('--logs', nargs='?', const=['/var/log/'], help='Location(s) to pull log file(s) from on victim after scenario is done.')
+parser.add_argument('--disk-image', nargs='?', const=['./filesystem.image.gz'], help='Create disk image of victim after scenario is done')
 parser.add_argument('--memory-dump', help='Create memory dump of victim after scenario is done')
 parser.add_argument('--pcap', help='Create packet capture of scenario traffic')
 parser.add_argument('--subnet', default='10.0.0.0/8', help='Subnet to place scenarios and containers on. Defaults to 10.0.0.0/8')
@@ -30,6 +30,8 @@ arg_dict['victim'] = {'dir': args.victim[0],
 
 arg_dict['subnet'] = args.subnet
 arg_dict['pcap'] = args.pcap
-arg_dict['disk_image'] = args.disk_image[0]
+arg_dict['disk_image'] = args.disk_image
+arg_dict['logs'] = args.logs
+arg_dict['mem_dump'] = args.memory_dump
 
 manager.run_scenario(arg_dict)

@@ -9,13 +9,17 @@
   tasks:
   - name: "Archive logs"
     archive: 
-      path: /var/log
+      path: "{{ log_path }}"
       dest: /tmp/logs.zip
       format: zip
 
-  - name: "Copy"
+  - name: "Copy logs out"
     fetch:
       src: /tmp/logs.zip
       dest: ./logs.zip
       flat: yes
-    
+
+  - name: "Delete logs temp file"
+    file:
+      state: absent
+      path: /tmp/logs.zip      
