@@ -1,0 +1,29 @@
+---
+- name: "Create Linux Memory Dump"
+  hosts: victim
+  remote_user: vagrant
+  become: yes
+  become_user: root
+
+  tasks:
+  - name: "Install Make"
+    package:
+      name: make
+      state: present
+
+  - name: "Install GCC"
+    package:
+      name: gcc
+      state: present
+
+  - name: "Clone Down LiME"
+    git:
+      repo: https://github.com/504ensicsLabs/LiME.git
+      dest: /opt/lime
+
+  - name: "Build LiME"
+    make:
+      chdir: /opt/lime/src
+
+  - name:
+    shell: cd /opt/lime/src && insmod lime-*.ko "path=/vagrant/mem-image.lime format=lime" 

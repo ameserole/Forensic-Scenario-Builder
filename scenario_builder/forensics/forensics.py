@@ -5,6 +5,7 @@ def pcap(bridge, pcap_write):
     cmd = "sudo tcpdump -i {} -s 65535 -w {} &".format(bridge, pcap_write) 
     os.system(cmd)
 
+
 def logs(logs_loc):
     log_path = "log_path={}".format(logs_loc)
     print log_path
@@ -12,16 +13,19 @@ def logs(logs_loc):
     runner.run_playbook()
     os.rename('./scenario_builder/forensics/playbooks/logs.zip', './logs.zip')
 
+
 def disk_image(victim):
     tmpfile = victim + 'filesystem.image.gz'
-#    if not os.path.exists(tmpfile):
-#        open(tmpfile, 'a').close()
     runner = AnsibleRunner('./scenario_builder/forensics/playbooks/diskimage-linux.yaml', hosts='./scenario_builder/forensics/hosts')
     runner.run_playbook()
     os.rename(tmpfile, './filesystem.image.gz')
 
-def memory_dump():
-    return True
+def memory_dump(victim):
+    runner = AnsibleRunner('./scenario_builder/forensics/playbooks/mem-dump-linux.yaml',  hosts='./scenario_builder/forensics/hosts')
+    runner.run_playbook()
+    tmpfile = victim + 'mem-image.lime' 
+    os.rename(tmpfile, './mem-image.lime')
+
 
 def custom():
     return True

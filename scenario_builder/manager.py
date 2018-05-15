@@ -28,6 +28,11 @@ def run_scenario(args):
         forensics.disk_image(args['victim']['dir'])
         print "Done creating disk image"
 
+    if args['mem_dump'] is not None:
+        print "Creating Memory Dump"
+        forensics.memory_dump(args['victim']['dir'])
+        print "Done creating memory dump"
+
     print "Tearing everything down"
     builder.tear_down(scenario_info)
     print "Scenario Done"    
