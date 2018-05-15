@@ -1,6 +1,9 @@
 from .. import utils
 
 class ComposeRunner:
+    """
+    Wrapper class for running docker-compose commnads
+    """
 
     def __init__(self):
         pass

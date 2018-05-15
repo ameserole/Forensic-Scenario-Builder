@@ -3,6 +3,16 @@ from forensics import forensics
 import time
 
 def run_scenario(args):
+    """
+    Manage the building, running, and teardown of the scenario 
+    as well as the collection of forensic artifacts based on 
+    passed arguments.
+    args:
+        args - dictionary containing the arguments passed in from the command line
+    return:
+        None
+    """
+
     build_args = {}
     build_args['bot'] = args['bot']
     build_args['attacker'] = args['attacker']

@@ -8,6 +8,11 @@ from vagrant_builder import vagrant_build, vagrant_destroy
 def build(scenario_info, subnet):
     """
     Build all containers and VMs based off of given info
+    args:
+        scenario_info - Dictionary containing the info needed to build the containers and vms
+        subnet - Subnet for scenario to operate in
+    return
+        return_info - Dictionary containing newly generated info from built containers and vms
     """
     
     docker_info = {}

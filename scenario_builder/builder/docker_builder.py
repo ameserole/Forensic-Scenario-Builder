@@ -3,6 +3,14 @@ from compose_runner import ComposeRunner
 import time
 
 def gen_compose_file(docker_info):
+    """
+    Generate docker-compose file from template
+    args:
+        docker_info - Dictionary containing the information needed to generate compose file
+    return:
+        None
+    """
+
     env = Environment(
         loader=FileSystemLoader('./scenario_builder/builder/templates'),
         autoescape=select_autoescape(['yml'])
@@ -21,9 +29,20 @@ def gen_compose_file(docker_info):
     f.close()
 
 def docker_build(docker_info):
+    """
+    Build all of the docker containers
+    args:
+        docker_info - Dictionary containing the information needed to build the containers
+    return:
+        None
+    """
+    
     gen_compose_file(docker_info)
     c = ComposeRunner()
     c.build()
+
+    # Need to bring up containers and pause them 
+    # so that the Vagrant vm is discoverable once attached to the network
     c.up(detach=True)
     time.sleep(10)
     c.pause()

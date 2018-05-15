@@ -2,6 +2,10 @@ from .. import utils
 import os
 
 class AnsibleRunner:
+    """
+    Wrapper class to run ansible-playbook commands
+    """
+
     def __init__(self, playbook, hosts='./hosts', private_key='~/.ssh/id_rsa', extra_var=None):
         self.cmd = 'ansible-playbook'
         self.hosts = hosts
