@@ -1,4 +1,4 @@
-from builder import builder, compose_cmd
+from builder import builder
 from forensics import forensics
 import time
 
@@ -15,9 +15,9 @@ def run_scenario(args):
         forensics.pcap(scenario_info['bridge'], args['pcap'])
 
     print "running scenario"
-    builder.run(scenario_info)
+    builder.run_scenario()
     time.sleep(60*5)   
-    compose_cmd.compose_pause()
+    builder.pause_scenario()
 
     if args['logs'] is not None:
         print "Creating logs"
@@ -34,5 +34,5 @@ def run_scenario(args):
         print "Done creating memory dump"
 
     print "Tearing everything down"
-    builder.tear_down(scenario_info)
+    builder.cleanup_scenario(scenario_info)
     print "Scenario Done"    

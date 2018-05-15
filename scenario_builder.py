@@ -10,8 +10,8 @@ parser.add_argument('--victim', required=True, nargs=1, help='Location of file d
 parser.add_argument('--victim-ip', nargs=1, default=['random'], help='Assign static ip to victim. Defaults to random assignment.')
 parser.add_argument('--logs', nargs='?', const='/var/log/', help='Location(s) to pull log file(s) from on victim after scenario is done.')
 parser.add_argument('--disk-image', nargs='?', const='./filesystem.image.gz', help='Create disk image of victim after scenario is done')
-parser.add_argument('--memory-dump', help='Create memory dump of victim after scenario is done')
-parser.add_argument('--pcap', help='Create packet capture of scenario traffic')
+parser.add_argument('--memory-dump', nargs='?', const='./mem-image.lime', help='Create memory dump of victim after scenario is done')
+parser.add_argument('--pcap', nargs='?', const='./capture.pcap', help='Create packet capture of scenario traffic')
 parser.add_argument('--subnet', default='10.0.0.0/8', help='Subnet to place scenarios and containers on. Defaults to 10.0.0.0/8')
 
 args = parser.parse_args()

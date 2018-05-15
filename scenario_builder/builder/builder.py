@@ -1,47 +1,9 @@
-import docker
 import time
-import compose_cmd
-import random
-from ipaddress import IPv4Network
+from compose_runner import ComposeRunner
+from .. import utils
 from docker_builder import docker_build 
 from vagrant_builder import vagrant_build, vagrant_destroy
 
-client = docker.from_env()
-
-def generate_ips(subnet, number):
-    """
-    Generate number of random ips in given subnet
-    """
-    network = IPv4Network(unicode(subnet), strict=False)
-
-    cidr = int(subnet.split('/')[1])
-    num_ips = pow(2, (32-cidr)) - 2 
-
-    ip_list = []
-    for i in range(number):
-        ip = str(network[random.randint(0,num_ips)])
-        if ip not in ip_list:
-            ip_list.append(ip)
-
-    return ip_list
-
-def docker_net_create(subnet):
-    ipam_pool = docker.types.IPAMPool(
-        subnet=subnet,
-    )
-
-    ipam_config = docker.types.IPAMConfig(
-        pool_configs=[ipam_pool]
-    )
-
-    docker_net = client.networks.create(
-        name="scenario_net",
-        driver="macvlan",
-        ipam=ipam_config,
-        check_duplicate=True,
-    )
-
-    return docker_net
 
 def build(scenario_info, subnet):
     """
@@ -51,7 +13,7 @@ def build(scenario_info, subnet):
     docker_info = {}
     vagrant_info = {}
 
-    ip_list = generate_ips(subnet, scenario_info['bot']['num-ips'] + 2)
+    ip_list = utils.generate_ips(subnet, scenario_info['bot']['num-ips'] + 2)
 
     attacker_info = scenario_info['attacker']
     if 'random' in scenario_info['attacker']['ip']:
@@ -74,7 +36,7 @@ def build(scenario_info, subnet):
         else:
             vagrant_info[key] = value
 
-    docker_net = docker_net_create(subnet)
+    docker_net = utils.docker_net_create(subnet)
     vagrant_info['bridge'] = "dm-{}".format(docker_net.id[:12])
     vagrant_info['cidr'] = subnet.split('/')[1]
 
@@ -95,10 +57,17 @@ def build(scenario_info, subnet):
 
     return return_info
 
-def run(scenario_info):
-    compose_cmd.compose_unpause()
+def run_scenario():
+    c = ComposeRunner()
+    c.unpause()
 
-def tear_down(scenario_info):
-    compose_cmd.compose_down()
+def pause_scenario():
+    c = ComposeRunner()
+    c.pause()
+
+def cleanup_scenario(scenario_info):
+    c = ComposeRunner()
+    c.down()
     vagrant_destroy(scenario_info)
+
 

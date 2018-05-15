@@ -1,17 +1,11 @@
 import vagrant
+from .. import utils
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-
-#http://code.activestate.com/recipes/576483-convert-subnetmask-from-cidr-notation-to-dotdecima/
-def calc_netmask(mask):
-    bits = 0
-    for i in xrange(32-mask,32):
-        bits |= (1 << i)
-    return "%d.%d.%d.%d" % ((bits & 0xff000000) >> 24, (bits & 0xff0000) >> 16, (bits & 0xff00) >> 8 , (bits & 0xff))
 
 
 def gen_vagrantfile(vagrant_info):
     
-    netmask = calc_netmask(int(vagrant_info['cidr']))
+    netmask = utils.calc_netmask(int(vagrant_info['cidr']))
 
     env = Environment( 
         loader=FileSystemLoader(vagrant_info['victim']['dir']),
@@ -30,7 +24,6 @@ def gen_vagrantfile(vagrant_info):
 def vagrant_build(vagrant_info):
     vagrant_loc = gen_vagrantfile(vagrant_info)
     v = vagrant.Vagrant(vagrant_info['victim']['dir'], quiet_stdout=False, quiet_stderr=False)
-#    v.provision()
     v.up()
 
     return True

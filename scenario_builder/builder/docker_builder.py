@@ -1,5 +1,5 @@
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-import compose_cmd
+from compose_runner import ComposeRunner
 import time
 
 def gen_compose_file(docker_info):
@@ -19,13 +19,12 @@ def gen_compose_file(docker_info):
     f = open('docker-compose.yml', 'w')
     f.write(compose)
     f.close()
-    return True
 
 def docker_build(docker_info):
     gen_compose_file(docker_info)
-    compose_cmd.compose_build()
-    compose_cmd.compose_up(detach=True)
+    c = ComposeRunner()
+    c.build()
+    c.up(detach=True)
     time.sleep(10)
-    compose_cmd.compose_pause()
-    return True
+    c.pause()
 
