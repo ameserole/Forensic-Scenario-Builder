@@ -2,6 +2,8 @@ import docker
 import logging
 import random
 import subprocess
+from Crypto.PublicKey import RSA
+from os import chmod
 from ipaddress import IPv4Network
 
 def generate_ips(subnet, number):
@@ -103,8 +105,35 @@ def run_cmd(args):
             ))
         raise
 
+# https://stackoverflow.com/questions/2466401/how-to-generate-ssh-key-pairs-with-python
+def gen_ssh_keypair():
+    """
+    Generate SSH Keypair for vagrant
+    args:
+        None
+    return:
+        None
+    """
+
+    key = RSA.generate(4096)
+    with open("/tmp/vagrant_private.key", 'w') as content_file:
+        chmod("/tmp/vagrant_private.key", 0600)
+        content_file.write(key.exportKey('PEM'))
+    pubkey = key.publickey()
+    with open("/tmp/vagrant_public.key", 'w') as content_file:
+        content_file.write(pubkey.exportKey('OpenSSH'))
+
+
 # https://stackoverflow.com/questions/7621897/python-logging-module-globally
 def setup_custom_logger(name):
+    """
+    Setup custom logging format
+    args:
+        name - logger name
+    return:
+        None
+    """
+
     formatter = logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(module)s - %(message)s')
 
     handler = logging.StreamHandler()

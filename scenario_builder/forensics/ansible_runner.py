@@ -6,7 +6,7 @@ class AnsibleRunner:
     Wrapper class to run ansible-playbook commands
     """
 
-    def __init__(self, playbook, hosts='./hosts', private_key='~/.ssh/id_rsa', extra_var=None):
+    def __init__(self, playbook, hosts='./hosts', private_key='/tmp/vagrant_private.key', extra_var=None):
         self.cmd = 'ansible-playbook'
         self.hosts = hosts
         self.playbook = playbook

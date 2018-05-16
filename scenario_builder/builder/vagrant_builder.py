@@ -14,6 +14,8 @@ def gen_vagrantfile(vagrant_info):
     
     netmask = utils.calc_netmask(int(vagrant_info['cidr']))
 
+    utils.gen_ssh_keypair()
+
     env = Environment( 
         loader=FileSystemLoader(vagrant_info['victim']['dir']),
     )
