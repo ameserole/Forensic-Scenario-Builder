@@ -1,4 +1,5 @@
 import os
+import logging
 from ansible_runner import AnsibleRunner
 
 def pcap(bridge, pcap_write):

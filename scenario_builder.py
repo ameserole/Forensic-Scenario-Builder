@@ -9,6 +9,7 @@ parser.add_argument('--attacker', required=True, nargs=1, help='Location of file
 parser.add_argument('--attacker-ip', nargs=1, default=['random'], help='Assign static ip to attacker. Defaults to random assignment.')
 parser.add_argument('--victim', required=True, nargs=1, help='Location of file describing victim container or vm.')
 parser.add_argument('--victim-ip', nargs=1, default=['random'], help='Assign static ip to victim. Defaults to random assignment.')
+parser.add_argument('--time-out', nargs=1, type=int, default=[5], help='Number of minutes to run scenario')
 parser.add_argument('--logs', nargs='?', const='/var/log/', help='Location(s) to pull log file(s) from on victim after scenario is done.')
 parser.add_argument('--disk-image', nargs='?', const='./filesystem.image.gz', help='Create disk image of victim after scenario is done')
 parser.add_argument('--memory-dump', nargs='?', const='./mem-image.lime', help='Create memory dump of victim after scenario is done')
@@ -34,6 +35,7 @@ arg_dict['pcap'] = args.pcap
 arg_dict['disk_image'] = args.disk_image
 arg_dict['logs'] = args.logs
 arg_dict['mem_dump'] = args.memory_dump
+arg_dict['timeout'] = args.time_out[0]
 
 logger = setup_custom_logger('root')
 logger.debug('Starting up scenario builder')

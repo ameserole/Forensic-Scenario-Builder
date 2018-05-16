@@ -34,8 +34,12 @@ def run_scenario(args):
         logger.debug('Running scenario')
         builder.run_scenario()
 
-        logger.debug('Sleeping {} minutes'.format(5))
-        time.sleep(60*5)   
+        logger.debug('Sleeping {} minutes'.format(args['timeout']))
+
+        for i in range(args['timeout']):
+            logger.debug('Slept {} out of {} minutes'.format(i, args['timeout']))
+            time.sleep(60)   
+
         builder.pause_scenario()
         if args['logs'] is not None:
             logger.debug('Creating logs')
