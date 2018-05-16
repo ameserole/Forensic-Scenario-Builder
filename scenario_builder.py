@@ -1,3 +1,4 @@
+from scenario_builder.utils import setup_custom_logger
 import argparse
 from scenario_builder import manager
   
@@ -34,4 +35,7 @@ arg_dict['disk_image'] = args.disk_image
 arg_dict['logs'] = args.logs
 arg_dict['mem_dump'] = args.memory_dump
 
+logger = setup_custom_logger('root')
+logger.debug('Starting up scenario builder')
+logger.debug('Argument Dictionary: {}'.format(arg_dict))
 manager.run_scenario(arg_dict)

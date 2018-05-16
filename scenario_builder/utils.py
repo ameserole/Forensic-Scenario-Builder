@@ -1,4 +1,5 @@
 import docker
+import logging
 import random
 import subprocess
 from ipaddress import IPv4Network
@@ -76,6 +77,7 @@ def run_cmd(args):
     return:
         None
     """
+    logger = logging.getLogger('root')
 
     try:
         p = subprocess.Popen(
@@ -83,17 +85,32 @@ def run_cmd(args):
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
         )
-        print p.stdout.read()
+        logger.debug('Command: {}\nOutput:\n{}'.format(
+            " ".join(args),
+            p.stdout.read()
+        ))
     except subprocess.CalledProcessError as e:
         if e.output:
-            print "Failed with exit code %d\nCommand: %s\n%s".format(
-                e.returncode,
+            logger.error("Command: {}\nFailed with exit code {}\n{}".format(
                 " ".join(args),
-                e.output.decode('utf-8')
-            )
-        else:
-            print "Failed with exit code %d\nCommand: %s".format(
                 e.returncode,
-                " ".join(self.args)
-            )
+                e.output.decode('utf-8')
+            ))
+        else:
+            logger.error("Command: {}\nFailed with exit code {}\n".format(
+                " ".join(self.args),
+                e.returncode
+            ))
         raise
+
+# https://stackoverflow.com/questions/7621897/python-logging-module-globally
+def setup_custom_logger(name):
+    formatter = logging.Formatter(fmt='%(asctime)s - %(levelname)s - %(module)s - %(message)s')
+
+    handler = logging.StreamHandler()
+    handler.setFormatter(formatter)
+
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(handler)
+    return logger

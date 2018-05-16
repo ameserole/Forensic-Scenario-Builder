@@ -10,7 +10,9 @@ def pcap(bridge, pcap_write):
     return:
         None
     """
-
+    logger = logging.getLogger('root')
+    logger.debug('Listing on {}'.format(bridge))
+    logger.debug('Writing pcap to {}'.format(pcap_write))
     cmd = "sudo tcpdump -i {} -s 65535 -w {} &".format(bridge, pcap_write) 
     os.system(cmd)
 
@@ -23,9 +25,9 @@ def logs(logs_loc):
     return:
         None
     """
-
+    logger = logging.getLogger('root')
     log_path = "log_path={}".format(logs_loc)
-    print log_path
+    logger.debug('Pulling logs from {}'.format(log_path))
     runner = AnsibleRunner('./scenario_builder/forensics/playbooks/logs-linux.yaml', hosts='./scenario_builder/forensics/hosts', extra_var=log_path)
     runner.run()
     os.rename('./scenario_builder/forensics/playbooks/logs.zip', './logs.zip')
