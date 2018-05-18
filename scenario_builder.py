@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 from scenario_builder.utils import setup_custom_logger
 import argparse
 from scenario_builder import manager
@@ -9,8 +11,8 @@ parser.add_argument('--attacker', required=True, nargs=1, help='Location of file
 parser.add_argument('--attacker-ip', nargs=1, default=['random'], help='Assign static ip to attacker. Defaults to random assignment.')
 parser.add_argument('--victim', required=True, nargs=1, help='Location of file describing victim container or vm.')
 parser.add_argument('--victim-ip', nargs=1, default=['random'], help='Assign static ip to victim. Defaults to random assignment.')
-parser.add_argument('--time-out', nargs=1, type=int, default=[5], help='Number of minutes to run scenario')
-parser.add_argument('--logs', nargs='?', const='/var/log/', help='Location(s) to pull log file(s) from on victim after scenario is done.')
+parser.add_argument('--time-out', nargs=1, type=int, default=[5], help='Number of minutes to run scenario. Defaults to 5 minutes.')
+parser.add_argument('--logs', nargs='?', const='/var/log/', help='Location to pull log file(s) from on victim after scenario is done. Defaults to /var/log.')
 parser.add_argument('--disk-image', nargs='?', const='./filesystem.image.gz', help='Create disk image of victim after scenario is done')
 parser.add_argument('--memory-dump', nargs='?', const='./mem-image.lime', help='Create memory dump of victim after scenario is done')
 parser.add_argument('--pcap', nargs='?', const='./capture.pcap', help='Create packet capture of scenario traffic')
